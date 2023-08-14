@@ -1,0 +1,73 @@
+create database store;
+
+create table countries (
+    code int primary key ,
+    name varchar(20) unique ,
+    continent_name varchar(20) not null
+);
+
+create table users (
+    id int primary key ,
+    full_name varchar(20) ,
+    email varchar(20) unique ,
+    gender char(1) check( gender='m' or gender = 'f'),
+    date_of_birth varchar(15) ,
+    created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    country_code int,
+    foreign key (country_code) references countries(code)
+);
+
+create table orders (
+    id int primary key ,
+    user_id int ,
+    status varchar(6) check ( status= 'start' or status='finish'),
+    created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    foreign key (user_id) references users(id)
+);
+
+create table orders_products (
+    order_id int primary key ,
+    product_id int ,
+    quantity int default 0,
+    foreign key (order_id) references orders(id),
+    foreign key (product_id) references products(id)
+);
+
+create table products (
+    id int primary key ,
+    name varchar(10) not null ,
+    price int default 0,
+    status varchar(10) check ( status= 'valid' or status='expired'),
+    created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+# Add new row to the countries table.
+insert  into countries values  (11,'A','Saudi Arabia');
+
+#Add new row to the users table.
+insert  into users values  (1, 'Razan Alanazi','user@gmail.com','f', '11/08/2000', default, 11);
+
+# Add new row to the orders table.
+insert  into orders values  (1,1,'start', default);
+
+# Add new row to the products table.
+insert  into products values  (1,'Book',60, 'valid', default);
+
+# Add new row to the order_products table.
+insert  into orders_products values  (1,1, 20);
+
+# Update row from countries table.
+update  countries set  name='B' where code=11;
+
+
+# Delete row from products table
+# must delete foreign key before pk
+delete from  orders_products where product_id= 1;
+delete from  products where id= 1;
+
+
+
+
+
+
+
