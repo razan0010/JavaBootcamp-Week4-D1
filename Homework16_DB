@@ -57,7 +57,7 @@ insert  into products values  (1,'Book',60, 'valid', default);
 insert  into orders_products values  (1,1, 20);
 
 # Update row from countries table.
-update  countries set  name='B' where code=11;
+update  countries set name='B' where code=11;
 
 
 # Delete row from products table
